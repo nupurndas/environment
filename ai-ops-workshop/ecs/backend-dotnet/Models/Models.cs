@@ -31,7 +31,7 @@ public class TimesheetEntry
     public User User { get; set; } = null!;
     
     [Required]
-    public string Date { get; set; } = string.Empty;
+    public DateTime Date { get; set; }
     
     [Required]
     public string Project { get; set; } = string.Empty;
