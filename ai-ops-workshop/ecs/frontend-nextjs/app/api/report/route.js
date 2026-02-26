@@ -25,10 +25,10 @@ export async function GET(request) {
     const entries = entriesResult.rows;
     const totalHours = entries.reduce((sum, e) => sum + parseFloat(e.Hours || 0), 0);
 
-    const { default: ReactPDF } = await import('@react-pdf/renderer');
-    const { Document, Page, Text, View, StyleSheet } = ReactPDF;
+    const ReactPDF = await import('@react-pdf/renderer');
+    const React = await import('react');
 
-    const styles = StyleSheet.create({
+    const styles = ReactPDF.StyleSheet.create({
       page: { padding: 30 },
       header: { fontSize: 24, marginBottom: 20, textAlign: 'center' },
       table: { display: 'table', width: 'auto', marginTop: 10 },
@@ -38,30 +38,40 @@ export async function GET(request) {
       total: { marginTop: 20, fontSize: 14, fontWeight: 'bold' }
     });
 
-    const doc = ReactPDF.createElement(Document, {},
-      ReactPDF.createElement(Page, { size: 'A4', style: styles.page },
-        ReactPDF.createElement(Text, { style: styles.header }, 'Timesheet Report'),
-        ReactPDF.createElement(Text, {}, `User: ${user.Name} (${user.Email})`),
-        ReactPDF.createElement(Text, {}, `Generated: ${new Date().toLocaleDateString()}`),
-        ReactPDF.createElement(View, { style: styles.table },
-          ReactPDF.createElement(View, { style: [styles.tableRow, styles.tableHeader] },
-            ReactPDF.createElement(Text, { style: styles.tableCell }, 'Date'),
-            ReactPDF.createElement(Text, { style: styles.tableCell }, 'Project'),
-            ReactPDF.createElement(Text, { style: styles.tableCell }, 'Task'),
-            ReactPDF.createElement(Text, { style: styles.tableCell }, 'Hours'),
-            ReactPDF.createElement(Text, { style: styles.tableCell }, 'Description')
+    const doc = React.createElement(
+      ReactPDF.Document,
+      null,
+      React.createElement(
+        ReactPDF.Page,
+        { size: 'A4', style: styles.page },
+        React.createElement(ReactPDF.Text, { style: styles.header }, 'Timesheet Report'),
+        React.createElement(ReactPDF.Text, null, `User: ${user.Name} (${user.Email})`),
+        React.createElement(ReactPDF.Text, null, `Generated: ${new Date().toLocaleDateString()}`),
+        React.createElement(
+          ReactPDF.View,
+          { style: styles.table },
+          React.createElement(
+            ReactPDF.View,
+            { style: [styles.tableRow, styles.tableHeader] },
+            React.createElement(ReactPDF.Text, { style: styles.tableCell }, 'Date'),
+            React.createElement(ReactPDF.Text, { style: styles.tableCell }, 'Project'),
+            React.createElement(ReactPDF.Text, { style: styles.tableCell }, 'Task'),
+            React.createElement(ReactPDF.Text, { style: styles.tableCell }, 'Hours'),
+            React.createElement(ReactPDF.Text, { style: styles.tableCell }, 'Description')
           ),
           ...entries.map((entry, i) =>
-            ReactPDF.createElement(View, { key: i, style: styles.tableRow },
-              ReactPDF.createElement(Text, { style: styles.tableCell }, entry.Date),
-              ReactPDF.createElement(Text, { style: styles.tableCell }, entry.Project),
-              ReactPDF.createElement(Text, { style: styles.tableCell }, entry.Task),
-              ReactPDF.createElement(Text, { style: styles.tableCell }, String(entry.Hours)),
-              ReactPDF.createElement(Text, { style: styles.tableCell }, entry.Description || '')
+            React.createElement(
+              ReactPDF.View,
+              { key: i, style: styles.tableRow },
+              React.createElement(ReactPDF.Text, { style: styles.tableCell }, entry.Date),
+              React.createElement(ReactPDF.Text, { style: styles.tableCell }, entry.Project),
+              React.createElement(ReactPDF.Text, { style: styles.tableCell }, entry.Task),
+              React.createElement(ReactPDF.Text, { style: styles.tableCell }, String(entry.Hours)),
+              React.createElement(ReactPDF.Text, { style: styles.tableCell }, entry.Description || '')
             )
           )
         ),
-        ReactPDF.createElement(Text, { style: styles.total }, `Total Hours: ${totalHours}`)
+        React.createElement(ReactPDF.Text, { style: styles.total }, `Total Hours: ${totalHours}`)
       )
     );
 
