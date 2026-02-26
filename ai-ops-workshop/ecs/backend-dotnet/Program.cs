@@ -67,7 +67,7 @@ app.MapGet("/api/timesheet", async (TmsDbContext db, int? userId) =>
     if (userId.HasValue)
         query = query.Where(t => t.UserId == userId.Value);
     
-    return Results.Ok(await query.OrderByDescending(t => t.CreatedAt).ToListAsync());
+    return Results.Ok(await query.OrderByDescending(t => t.Id).ToListAsync());
 });
 
 app.MapPost("/api/logout", () => Results.Ok(new { success = true }));
@@ -75,4 +75,4 @@ app.MapPost("/api/logout", () => Results.Ok(new { success = true }));
 app.Run();
 
 record LoginRequest(string Uid, string Password);
-record TimesheetRequest(int UserId, string Date, string Project, string Task, string Hours, string Description);
+record TimesheetRequest(int UserId, string Date, string Project, string Task, decimal Hours, string? Description);

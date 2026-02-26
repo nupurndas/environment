@@ -42,7 +42,12 @@ function Timesheet({ onLogout }) {
     e.preventDefault();
     try {
       const userId = localStorage.getItem('userId') || 1;
-      await axios.post(`${backendUrl}/api/timesheet`, { ...formData, userId: parseInt(userId) });
+      const payload = {
+        ...formData,
+        userId: parseInt(userId),
+        hours: parseFloat(formData.hours) || 0
+      };
+      await axios.post(`${backendUrl}/api/timesheet`, payload);
       setMessage('Timesheet entry added successfully!');
       setIsError(false);
       setFormData({ date: '', project: '', task: '', hours: '', description: '' });

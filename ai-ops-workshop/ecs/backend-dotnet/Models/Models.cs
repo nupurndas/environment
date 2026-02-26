@@ -40,10 +40,7 @@ public class TimesheetEntry
     public string Task { get; set; } = string.Empty;
     
     [Required]
-    public string Hours { get; set; } = string.Empty;
+    public decimal Hours { get; set; }
     
-    [Required]
-    public string Description { get; set; } = string.Empty;
-    
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string? Description { get; set; }
 }
