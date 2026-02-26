@@ -31,7 +31,7 @@ public class TimesheetEntry
     public User User { get; set; } = null!;
     
     [Required]
-    public DateTime Date { get; set; }
+    public string Date { get; set; } = string.Empty;
     
     [Required]
     public string Project { get; set; } = string.Empty;
@@ -40,7 +40,7 @@ public class TimesheetEntry
     public string Task { get; set; } = string.Empty;
     
     [Required]
-    public decimal Hours { get; set; }
+    public string Hours { get; set; } = string.Empty;
     
     public string? Description { get; set; }
 }

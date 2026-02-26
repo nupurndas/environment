@@ -75,4 +75,4 @@ app.MapPost("/api/logout", () => Results.Ok(new { success = true }));
 app.Run();
 
 record LoginRequest(string Uid, string Password);
-record TimesheetRequest(int UserId, DateTime Date, string Project, string Task, decimal Hours, string? Description);
+record TimesheetRequest(int UserId, string Date, string Project, string Task, string Hours, string? Description);

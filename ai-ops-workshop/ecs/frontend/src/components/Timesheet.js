@@ -44,8 +44,7 @@ function Timesheet({ onLogout }) {
       const userId = localStorage.getItem('userId') || 1;
       const payload = {
         ...formData,
-        userId: parseInt(userId),
-        hours: parseFloat(formData.hours) || 0
+        userId: parseInt(userId)
       };
       await axios.post(`${backendUrl}/api/timesheet`, payload);
       setMessage('Timesheet entry added successfully!');
