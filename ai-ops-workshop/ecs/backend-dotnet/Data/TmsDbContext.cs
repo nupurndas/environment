@@ -29,10 +29,10 @@ public class TmsDbContext : DbContext
             entity.ToTable("TimesheetEntries");
             entity.Property(e => e.Id).HasColumnName("Id");
             entity.Property(e => e.UserId).HasColumnName("UserId");
-            entity.Property(e => e.Date).HasColumnName("Date");
+            entity.Property(e => e.Date).HasColumnName("Date").HasColumnType("date");
             entity.Property(e => e.Project).HasColumnName("Project");
             entity.Property(e => e.Task).HasColumnName("Task");
-            entity.Property(e => e.Hours).HasColumnName("Hours");
+            entity.Property(e => e.Hours).HasColumnName("Hours").HasColumnType("numeric(5,2)");
             entity.Property(e => e.Description).HasColumnName("Description");
         });
         
