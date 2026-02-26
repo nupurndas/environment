@@ -48,7 +48,7 @@ app.MapPost("/api/timesheet", async (TmsDbContext db, TimesheetRequest request) 
     var entry = new TimesheetEntry
     {
         UserId = request.UserId,
-        Date = request.Date,
+        Date = DateTime.Parse(request.Date),
         Project = request.Project,
         Task = request.Task,
         Hours = request.Hours,
@@ -75,4 +75,4 @@ app.MapPost("/api/logout", () => Results.Ok(new { success = true }));
 app.Run();
 
 record LoginRequest(string Uid, string Password);
-record TimesheetRequest(int UserId, string Date, string Project, string Task, string Hours, string? Description);
+record TimesheetRequest(int UserId, string Date, string Project, string Task, decimal Hours, string? Description);
